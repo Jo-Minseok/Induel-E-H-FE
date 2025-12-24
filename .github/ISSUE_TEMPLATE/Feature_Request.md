@@ -2,7 +2,7 @@
 name: ⭐ 기능 추가 요청
 about: 기능을 추가해주세요!
 title: "[FE] {제목}"
-labels:
+labels: ✨ Feature
 assignees:
 ---
 

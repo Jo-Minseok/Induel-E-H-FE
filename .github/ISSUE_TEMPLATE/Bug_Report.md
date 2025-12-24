@@ -2,7 +2,7 @@
 name: 🐞 버그 신고
 about: 버그를 발견했어요!
 title: "[FIX] {제목}"
-labels:
+labels: 👹 BugFix
 assignees:
 ---
 
