@@ -2,7 +2,7 @@ FROM node:24.11.1-alpine
 
 WORKDIR /home/induel
 
-COPY ../package*.json ./
+COPY package*.json ./
 RUN npm install
 
 EXPOSE 5173
