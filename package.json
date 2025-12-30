@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier . --write",
-    "prepare": "husky"
+    "prepare": "husky",
     "commit": "cz"
   },
   "dependencies": {
@@ -45,6 +45,7 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
+  },
   "config": {
     "commitizen": {
       "path": "cz-customizable"
