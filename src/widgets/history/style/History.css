@@ -33,7 +33,15 @@
   text-shadow: 0 4px 4px #00000040;
 }
 
-.history__category li {
+.history__category button {
   font-weight: 600;
   font-size: 1.04vmax;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+.history__category button.active {
+  color: var(--brown-300);
 }
