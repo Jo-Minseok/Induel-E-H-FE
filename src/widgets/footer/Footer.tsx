@@ -1,6 +1,11 @@
 import './styles/Footer.css';
 
 export function Footer() {
+  const email = 'seven@induel.co.kr';
+  const tel = '051-626-6277';
+  const fax = '051-625-6279';
+  const address = '부산광역시 남구 수영로 274-16';
+
   return (
     <footer className='footer'>
       <div className='footer__top'>
@@ -29,21 +34,21 @@ export function Footer() {
           <span className='footer__title'>Contact</span>
           <div className='footer__contact-row'>
             <span>Tel</span>
-            <a href='tel:051-626-6277'>051-626-6277</a>
+            <a href={`mailto:${tel}`}>{tel}</a>
           </div>
           <div className='footer__contact-row'>
             <span>Fax</span>
-            <p>051-625-6279</p>
+            <p>{fax}</p>
           </div>
           <div className='footer__contact-row'>
             <span>Email</span>
-            <a href='mailto:seven@induel.co.kr'>seven@induel.co.kr</a>
+            <a href={`mailto:${email}`}>{email}</a>
           </div>
         </address>
 
         <address className='footer__address'>
           <span className='footer__title'>Address</span>
-          <span>부산광역시 남구 수영로 274-16</span>
+          <span>{address}</span>
         </address>
       </div>
 
