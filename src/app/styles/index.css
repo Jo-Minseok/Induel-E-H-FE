@@ -1,5 +1,4 @@
 @import './fonts.css';
-@import 'normalize.css';
 
 :root {
   font-family: 'Pretendard', sans-serif;
@@ -75,12 +74,7 @@
   --book-page: var(--white);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
+* {
   margin: 0;
+  padding: 0;
 }
