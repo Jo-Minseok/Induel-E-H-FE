@@ -1,3 +1,4 @@
+// import { Footer } from '@widgets/footer';
 import Hero from '@widgets/hero';
 
 // import Map from '@widgets/map';
@@ -7,6 +8,7 @@ function Home() {
     <>
       <Hero></Hero>
       {/* <Map></Map> */}
+      {/* <Footer></Footer> */}
     </>
   );
 }
