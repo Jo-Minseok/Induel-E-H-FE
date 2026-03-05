@@ -3,6 +3,48 @@ import { Fragment, useState } from 'react';
 import '../style/History.css';
 import '../style/HistoryBook.css';
 
+type PageSide = 'left' | 'right';
+
+function BookPageOuterShadow({ side }: { side: PageSide }) {
+  const levels = side === 'left' ? [3, 2, 1] : [1, 2, 3];
+  return (
+    <div className='history__book-page-outer-shadow'>
+      {levels.map((level) => (
+        <div
+          key={level}
+          className={`history__book-page-outer-shadow-${level}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function BookPage({
+  side,
+  children,
+}: {
+  side: PageSide;
+  children?: React.ReactNode;
+}) {
+  return (
+    <div className={`history__book-page-${side}`}>
+      {side === 'left' ? (
+        <>
+          <BookPageOuterShadow side='left' />
+          <div className='history__book-page-content'>{children}</div>
+          <div className='history__book-page-inner-shadow' />
+        </>
+      ) : (
+        <>
+          <div className='history__book-page-inner-shadow' />
+          <div className='history__book-page-content'>{children}</div>
+          <BookPageOuterShadow side='right' />
+        </>
+      )}
+    </div>
+  );
+}
+
 function History() {
   const indexList = ['List', 'Content', 'History', 'Award'];
   const [activeItem, setActiveItem] = useState('List');
@@ -29,8 +71,8 @@ function History() {
         </div>
         <div className='history__book'>
           <div className='history__book-page'>
-            <div className='history__book-page-left'></div>
-            <div className='history__book-page-right'></div>
+            <BookPage side='left' />
+            <BookPage side='right' />
           </div>
           <div className='history__book-cover'>
             <div className='history__book-cover-left'></div>
