@@ -1,8 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { MdDirectionsBus, MdSubway } from 'react-icons/md';
-import { TbWalk } from 'react-icons/tb';
 
 import { makeMap } from '../model/map';
+import { TRANSPORT_ITEMS } from '../model/transportInfo';
 import '../styles/Map.css';
 import '../styles/mapInfoCard.css';
 import '../styles/mapMarker.css';
@@ -26,37 +25,17 @@ function Map() {
       </div>
       <address className='map__description'>
         <ul>
-          <li>
-            <div className='map__description_title'>
-              <TbWalk className='map__icon' id='map__walk' aria-hidden='true' />
-              <h3>도보</h3>
-            </div>
-            <p>부산 남구 수영로 274-16</p>
-            <p>프렌즈 스크린 부산 대연점 옆 건물</p>
-          </li>
-          <li>
-            <div className='map__description_title'>
-              <MdDirectionsBus
-                className='map__icon'
-                id='map__bus'
-                aria-hidden='true'
-              />
-              <h3>버스</h3>
-            </div>
-            <p>대연역 정거장</p>
-            <p>경성대학교 정거장</p>
-          </li>
-          <li>
-            <div className='map__description_title'>
-              <MdSubway
-                className='map__icon'
-                id='map__subway'
-                aria-hidden='true'
-              />
-              <h3>지하철</h3>
-            </div>
-            <p>2호선 경성대부경대역 5번 출구</p>
-          </li>
+          {TRANSPORT_ITEMS.map(({ id, Icon, label, lines }) => (
+            <li key={id}>
+              <div className='map__description_title'>
+                <Icon className='map__icon' id={id} aria-hidden='true' />
+                <h3>{label}</h3>
+              </div>
+              {lines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </li>
+          ))}
         </ul>
       </address>
     </section>

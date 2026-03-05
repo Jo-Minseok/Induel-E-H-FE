@@ -39,24 +39,23 @@ function getMarkerConfig() {
   };
 }
 
-export function makeMapMarker(map: naver.maps.Map): naver.maps.Marker {
+function createMarkerIcon() {
   const { iconW, iconH, anchorX, anchorY } = getMarkerConfig();
+  return {
+    content: createMarkerSvg(),
+    size: new naver.maps.Size(iconW, iconH),
+    anchor: new naver.maps.Point(anchorX, anchorY),
+  };
+}
+
+export function makeMapMarker(map: naver.maps.Map): naver.maps.Marker {
   return new naver.maps.Marker({
     position: map.getCenter(),
     map,
-    icon: {
-      content: createMarkerSvg(),
-      size: new naver.maps.Size(iconW, iconH),
-      anchor: new naver.maps.Point(anchorX, anchorY),
-    },
+    icon: createMarkerIcon(),
   });
 }
 
 export function updateMarkerIcon(marker: naver.maps.Marker) {
-  const { iconW, iconH, anchorX, anchorY } = getMarkerConfig();
-  marker.setIcon({
-    content: createMarkerSvg(),
-    size: new naver.maps.Size(iconW, iconH),
-    anchor: new naver.maps.Point(anchorX, anchorY),
-  });
+  marker.setIcon(createMarkerIcon());
 }
