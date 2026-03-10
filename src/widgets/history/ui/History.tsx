@@ -1,9 +1,12 @@
 import { Fragment, useState } from 'react';
 
+import type { PageSide } from '../model/types';
 import '../style/History.css';
 import '../style/HistoryBook.css';
-
-type PageSide = 'left' | 'right';
+import { AwardPage } from './Award';
+import { ContentPage } from './Content';
+import { HistoryPage } from './HistoryPage';
+import { ListPage } from './List';
 
 function BookPageOuterShadow({ side }: { side: PageSide }) {
   const levels = side === 'left' ? [3, 2, 1] : [1, 2, 3];
@@ -71,8 +74,18 @@ function History() {
         </div>
         <div className='history__book'>
           <div className='history__book-page'>
-            <BookPage side='left' />
-            <BookPage side='right' />
+            <BookPage side='left'>
+              {activeItem === 'List' && <ListPage side='left' />}
+              {activeItem === 'Content' && <ContentPage side='left' />}
+              {activeItem === 'History' && <HistoryPage side='left' />}
+              {activeItem === 'Award' && <AwardPage side='left' />}
+            </BookPage>
+            <BookPage side='right'>
+              {activeItem === 'List' && <ListPage side='right' />}
+              {activeItem === 'Content' && <ContentPage side='right' />}
+              {activeItem === 'History' && <HistoryPage side='right' />}
+              {activeItem === 'Award' && <AwardPage side='right' />}
+            </BookPage>
           </div>
           <div className='history__book-cover'>
             <div className='history__book-cover-left'></div>
