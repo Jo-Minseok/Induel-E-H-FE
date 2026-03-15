@@ -35,7 +35,7 @@ const INFO_CONTENT = `
           </svg>
         </div>
         <div>
-          <p class="map__info__address-main">${COMPANY.ADDRESS_MAIN}</p>
+          <p class="map__info__address-main">${COMPANY.ADDRESS_FULL}</p>
           <p class="map__info__address-sub">${COMPANY.ADDRESS_SUB}</p>
         </div>
       </div>
