@@ -50,10 +50,11 @@ Read `.github/PULL_REQUEST_TEMPLATE.md` and use it as the template structure.
 
 ```bash
 BRANCH=$(git branch --show-current)
+GH_USER=$(gh api user --jq '.login')
 gh pr create \
   --repo Induel-E-H/web-FE \
   --base main \
-  --head Jo-Minseok:$BRANCH \
+  --head $GH_USER:$BRANCH \
   --title "[PREFIX] [concise title]" \
   --label "[selected label]" \
   --body "$(cat <<'EOF'
