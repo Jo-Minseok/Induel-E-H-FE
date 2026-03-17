@@ -1,6 +1,11 @@
 import { Fragment, type RefObject, useEffect, useRef, useState } from 'react';
 
-import { CONTENT_TOTAL_PAGES, INDEX_LIST, PAGE_SIDE } from '../model/constants';
+import {
+  AWARD_TOTAL_PAGES,
+  CONTENT_TOTAL_PAGES,
+  INDEX_LIST,
+  PAGE_SIDE,
+} from '../model/constants';
 import type { IndexItem, PageSide } from '../model/types';
 import '../style/History.css';
 import '../style/HistoryBook.css';
@@ -77,14 +82,18 @@ type FlipState = { side: PageSide } | null;
 function History() {
   const [activeItem, setActiveItem] = useState<IndexItem>('List');
   const [contentPage, setContentPage] = useState(0);
+  const [awardPage, setAwardPage] = useState(0);
   const [flipState, setFlipState] = useState<FlipState>(null);
 
   const activeIndex = INDEX_LIST.indexOf(activeItem);
   const canGoLeft =
-    activeIndex > 0 || (activeItem === 'Content' && contentPage > 0);
+    activeIndex > 0 ||
+    (activeItem === 'Content' && contentPage > 0) ||
+    (activeItem === 'Award' && awardPage > 0);
   const canGoRight =
     activeIndex < INDEX_LIST.length - 1 ||
-    (activeItem === 'Content' && contentPage < CONTENT_TOTAL_PAGES - 1);
+    (activeItem === 'Content' && contentPage < CONTENT_TOTAL_PAGES - 1) ||
+    (activeItem === 'Award' && awardPage < AWARD_TOTAL_PAGES - 1);
 
   const isAnimatingRef = useRef(false);
   const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -120,9 +129,12 @@ function History() {
     triggerFlip(PAGE_SIDE.LEFT, () => {
       if (activeItem === 'Content' && contentPage > 0) {
         setContentPage((p) => p - 1);
+      } else if (activeItem === 'Award' && awardPage > 0) {
+        setAwardPage((p) => p - 1);
       } else if (activeIndex > 0) {
         const prev = INDEX_LIST[activeIndex - 1];
         if (prev === 'Content') setContentPage(CONTENT_TOTAL_PAGES - 1);
+        if (prev === 'Award') setAwardPage(AWARD_TOTAL_PAGES - 1);
         setActiveItem(prev);
       }
     });
@@ -133,9 +145,12 @@ function History() {
     triggerFlip(PAGE_SIDE.RIGHT, () => {
       if (activeItem === 'Content' && contentPage < CONTENT_TOTAL_PAGES - 1) {
         setContentPage((p) => p + 1);
+      } else if (activeItem === 'Award' && awardPage < AWARD_TOTAL_PAGES - 1) {
+        setAwardPage((p) => p + 1);
       } else if (activeIndex < INDEX_LIST.length - 1) {
         const next = INDEX_LIST[activeIndex + 1];
         if (next === 'Content') setContentPage(0);
+        if (next === 'Award') setAwardPage(0);
         setActiveItem(next);
       }
     });
@@ -155,6 +170,7 @@ function History() {
     const side = newIndex > activeIndex ? PAGE_SIDE.RIGHT : PAGE_SIDE.LEFT;
     triggerFlip(side, () => {
       if (item === 'Content') setContentPage(0);
+      if (item === 'Award') setAwardPage(0);
       setActiveItem(item);
     });
   }
@@ -240,7 +256,9 @@ function History() {
               {activeItem === 'Timeline' && (
                 <TimelinePage side={PAGE_SIDE.LEFT} />
               )}
-              {activeItem === 'Award' && <AwardPage side={PAGE_SIDE.LEFT} />}
+              {activeItem === 'Award' && (
+                <AwardPage side={PAGE_SIDE.LEFT} pageIndex={awardPage} />
+              )}
             </BookPage>
             <BookPage
               side={PAGE_SIDE.RIGHT}
@@ -266,7 +284,9 @@ function History() {
               {activeItem === 'Timeline' && (
                 <TimelinePage side={PAGE_SIDE.RIGHT} />
               )}
-              {activeItem === 'Award' && <AwardPage side={PAGE_SIDE.RIGHT} />}
+              {activeItem === 'Award' && (
+                <AwardPage side={PAGE_SIDE.RIGHT} pageIndex={awardPage} />
+              )}
             </BookPage>
           </div>
           <div className='history__book-cover'>
