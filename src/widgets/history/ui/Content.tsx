@@ -40,12 +40,12 @@ function SubTitleContent({
   }
 
   return (
-    <>
+    <div className='content__text-group'>
       {subTitle && <h4 className='content__subtitle'>{subTitle}</h4>}
       {typeof content === 'string' && content && (
         <p className='content__body'>{content}</p>
       )}
-    </>
+    </div>
   );
 }
 

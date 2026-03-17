@@ -32,7 +32,8 @@
 .content__subtitle {
   font-size: 0.89vmax;
   font-weight: 600;
-  color: var(--typo-contentW);
+  color: var(--black);
+  white-space: pre-line;
 }
 
 .content__body {
@@ -61,7 +62,7 @@
 .content__caption span {
   font-size: 0.68vmax;
   font-weight: 400;
-  color: var(--typo-caption);
+  color: var(--typo-contentW);
 }
 
 .content__empty {
@@ -70,7 +71,7 @@
 
 .content__image {
   height: 100%;
-  border-radius: 2px;
+  border-radius: 0.463vh;
   overflow: hidden;
 }
 
