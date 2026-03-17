@@ -40,7 +40,7 @@
   gap: 1.93%;
   font-size: 0.73vmax;
   font-weight: 400;
-  color: var(--black);
+  color: var(--typo-contentW);
 }
 
 .award__ul li::before {
