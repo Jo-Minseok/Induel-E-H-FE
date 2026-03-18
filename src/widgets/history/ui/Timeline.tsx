@@ -1,11 +1,12 @@
-import timelineItem from '../model/data/timeline.json';
+import { timelineData } from '@entities/history';
+
 import type { PageSide } from '../model/types';
 import '../styles/Timeline.css';
 import { BookPageTitle } from './BookPageTitle';
 
-const maxPerPage = Math.ceil(timelineItem.length / 2);
-const leftItems = timelineItem.slice(0, maxPerPage);
-const rightItems = timelineItem.slice(maxPerPage);
+const maxPerPage = Math.ceil(timelineData.length / 2);
+const leftItems = timelineData.slice(0, maxPerPage);
+const rightItems = timelineData.slice(maxPerPage);
 
 export function TimelinePage({ side }: { side: PageSide }) {
   const items = side === 'left' ? leftItems : rightItems;

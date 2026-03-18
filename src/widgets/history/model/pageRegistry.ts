@@ -1,4 +1,5 @@
-import artworks from './data/artwork.json';
+import { artworks } from '@entities/history';
+
 import type { IndexItem } from './types';
 
 export const AWARD_YEAR_RANGES = [

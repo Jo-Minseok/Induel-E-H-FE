@@ -1,4 +1,5 @@
-import artworks from '../model/data/artwork.json';
+import { artworks } from '@entities/history';
+
 import { getDataIndex } from '../model/helpers';
 import type { PageSide } from '../model/types';
 import '../styles/Content.css';

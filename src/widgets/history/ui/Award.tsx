@@ -1,4 +1,5 @@
-import awardData from '../model/data/award.json';
+import { awardData } from '@entities/history';
+
 import { getDataIndex } from '../model/helpers';
 import { AWARD_YEAR_RANGES } from '../model/pageRegistry';
 import type { PageSide } from '../model/types';

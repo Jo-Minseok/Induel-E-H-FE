@@ -1,4 +1,5 @@
-import artworks from '../model/data/artwork.json';
+import { artworks } from '@entities/history';
+
 import type { PageSide } from '../model/types';
 import '../styles/List.css';
 import { BookPageTitle } from './BookPageTitle';
