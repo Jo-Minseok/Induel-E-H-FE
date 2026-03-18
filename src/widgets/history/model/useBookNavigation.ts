@@ -1,4 +1,5 @@
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 import type { Breakpoint } from '@shared/lib/breakpoint/useBreakpoint';
 
@@ -6,8 +7,7 @@ import { INDEX_LIST } from './constants';
 import { getPageRegistry } from './pageRegistry';
 import type { IndexItem } from './types';
 
-const HOLD_DELAY = 800;
-const HOLD_INTERVAL = 150;
+const FLIP_DURATION = 800;
 
 export function useBookNavigation(breakpoint: Breakpoint) {
   const pageRegistry = getPageRegistry(breakpoint);
@@ -36,10 +36,13 @@ export function useBookNavigation(breakpoint: Breakpoint) {
 
   const isAnimatingRef = useRef(false);
   const pendingNavRef = useRef<(() => void) | null>(null);
-  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const holdIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const leftClickRef = useRef<() => void>(() => {});
-  const rightClickRef = useRef<() => void>(() => {});
+  const holdDirectionRef = useRef<'left' | 'right' | null>(null);
+  const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const chainTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const goLeftRef = useRef<() => void>(() => {});
+  const goRightRef = useRef<() => void>(() => {});
+  const stopHoldRef = useRef<() => void>(() => {});
 
   // 다음 페이지 계산 (forward)
   let nextPageIndex = currentPageIndex;
@@ -63,37 +66,47 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     prevPageIndex = pageRegistry[prevActiveItem].totalPages - 1;
   }
 
-  function stopHold() {
-    if (holdTimerRef.current) {
-      clearTimeout(holdTimerRef.current);
-      holdTimerRef.current = null;
-    }
-    if (holdIntervalRef.current) {
-      clearInterval(holdIntervalRef.current);
-      holdIntervalRef.current = null;
-    }
-  }
+  function completeFlip() {
+    if (!isAnimatingRef.current) return;
 
-  function onFlipComplete() {
     const nav = pendingNavRef.current;
     pendingNavRef.current = null;
-    if (nav) nav();
-    setFlipDirection(null);
-    setIsFlipping(false);
+
+    // flushSync로 리셋 렌더를 동기적으로 커밋
+    // React auto-batching이 isFlipping false→true를 병합하는 것을 방지
+    flushSync(() => {
+      if (nav) nav();
+      setFlipDirection(null);
+      setIsFlipping(false);
+    });
+
     isAnimatingRef.current = false;
+
+    // Hold 중이면 다음 플립 체이닝
+    if (holdDirectionRef.current) {
+      chainTimerRef.current = setTimeout(() => {
+        if (holdDirectionRef.current === 'left') goLeftRef.current();
+        else if (holdDirectionRef.current === 'right') goRightRef.current();
+      }, 0);
+    }
   }
 
   function triggerFlip(direction: 'forward' | 'backward', nav: () => void) {
     if (isAnimatingRef.current) return;
-    stopHold();
     isAnimatingRef.current = true;
     pendingNavRef.current = nav;
     setFlipDirection(direction);
     setIsFlipping(true);
+
+    // CSS transition과 동일한 duration 후 완료
+    flipTimerRef.current = setTimeout(completeFlip, FLIP_DURATION);
   }
 
   function goLeft() {
-    if (!canGoLeft) return;
+    if (!canGoLeft) {
+      holdDirectionRef.current = null;
+      return;
+    }
     triggerFlip('backward', () => {
       if (currentPageIndex > 0) {
         setPageIndices((prev) => ({
@@ -110,7 +123,10 @@ export function useBookNavigation(breakpoint: Breakpoint) {
   }
 
   function goRight() {
-    if (!canGoRight) return;
+    if (!canGoRight) {
+      holdDirectionRef.current = null;
+      return;
+    }
     triggerFlip('forward', () => {
       if (currentPageIndex < totalPages - 1) {
         setPageIndices((prev) => ({
@@ -135,34 +151,67 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     });
   }
 
-  function startHold(clickRef: RefObject<() => void>) {
-    clickRef.current();
-    holdTimerRef.current = setTimeout(() => {
-      holdIntervalRef.current = setInterval(
-        () => clickRef.current(),
-        HOLD_INTERVAL,
-      );
-    }, HOLD_DELAY);
+  function startHold(direction: 'left' | 'right') {
+    holdDirectionRef.current = direction;
+    if (direction === 'left') goLeftRef.current();
+    else goRightRef.current();
   }
 
+  function stopHold() {
+    holdDirectionRef.current = null;
+    if (chainTimerRef.current) {
+      clearTimeout(chainTimerRef.current);
+      chainTimerRef.current = null;
+    }
+  }
+
+  // 매 렌더 후 최신 함수 반영
   useEffect(() => {
-    leftClickRef.current = goLeft;
-    rightClickRef.current = goRight;
+    goLeftRef.current = goLeft;
+    goRightRef.current = goRight;
+    stopHoldRef.current = stopHold;
   });
 
+  // 마우스: window-level mouseup
   useEffect(() => {
-    function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === 'ArrowLeft') leftClickRef.current();
-      else if (e.key === 'ArrowRight') rightClickRef.current();
+    function handleMouseUp() {
+      stopHoldRef.current();
     }
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => window.removeEventListener('mouseup', handleMouseUp);
   }, []);
 
+  // 키보드
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.repeat) return;
+      if (e.key === 'ArrowLeft') {
+        holdDirectionRef.current = 'left';
+        goLeftRef.current();
+      } else if (e.key === 'ArrowRight') {
+        holdDirectionRef.current = 'right';
+        goRightRef.current();
+      }
+    }
+    function handleKeyUp(e: KeyboardEvent) {
+      if (e.key === 'ArrowLeft' && holdDirectionRef.current === 'left')
+        stopHoldRef.current();
+      else if (e.key === 'ArrowRight' && holdDirectionRef.current === 'right')
+        stopHoldRef.current();
+    }
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  // 클린업
   useEffect(() => {
     return () => {
-      if (holdTimerRef.current) clearTimeout(holdTimerRef.current);
-      if (holdIntervalRef.current) clearInterval(holdIntervalRef.current);
+      if (flipTimerRef.current) clearTimeout(flipTimerRef.current);
+      if (chainTimerRef.current) clearTimeout(chainTimerRef.current);
     };
   }, []);
 
@@ -173,15 +222,11 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     canGoRight,
     isFlipping,
     flipDirection,
-    onFlipComplete,
     nextPageIndex,
     nextActiveItem,
     prevPageIndex,
     prevActiveItem,
     goToItem,
-    stopHold,
     startHold,
-    leftClickRef,
-    rightClickRef,
   };
 }

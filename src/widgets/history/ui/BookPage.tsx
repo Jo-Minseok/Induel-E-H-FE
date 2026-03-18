@@ -1,4 +1,4 @@
-import type { ReactNode, TransitionEvent } from 'react';
+import type { ReactNode } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 
 import { PAGE_SIDE } from '../model/constants';
@@ -28,11 +28,8 @@ export function BookPage({
   flipDirection,
   canGoLeft,
   canGoRight,
-  onTransitionEnd,
   onLeftMouseDown,
   onRightMouseDown,
-  onMouseUp,
-  onMouseLeave,
 }: {
   staticLeftContent: ReactNode;
   staticRightContent: ReactNode;
@@ -42,41 +39,39 @@ export function BookPage({
   flipDirection: 'forward' | 'backward' | null;
   canGoLeft: boolean;
   canGoRight: boolean;
-  onTransitionEnd: () => void;
   onLeftMouseDown?: () => void;
   onRightMouseDown?: () => void;
-  onMouseUp?: () => void;
-  onMouseLeave?: () => void;
 }) {
   const flipPanelRef = useRef<HTMLDivElement>(null);
-  const noTransitionRef = useRef(false);
 
   useLayoutEffect(() => {
     const panel = flipPanelRef.current;
     if (!panel) return;
 
     if (!isFlipping) {
-      // 플립 완료: 패널을 즉시 리셋하고 숨김 (콘텐츠 교체 시 깜빡임 방지)
-      panel.classList.add('history__book-flip-panel--no-transition');
+      // 플립 완료: transition 없이 즉시 리셋, 숨김
+      panel.style.transition = 'none';
       panel.classList.remove('flipping');
       panel.classList.remove('history__book-flip-panel--animating');
       panel.classList.add('history__book-flip-panel--hidden');
-      noTransitionRef.current = true;
 
+      // 다음 프레임에서 transition 복원
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          if (noTransitionRef.current && flipPanelRef.current) {
-            flipPanelRef.current.classList.remove(
-              'history__book-flip-panel--no-transition',
-            );
-            noTransitionRef.current = false;
-          }
-        });
+        if (flipPanelRef.current) {
+          flipPanelRef.current.style.transition = '';
+        }
       });
     } else {
-      // 새 플립 시작: 패널을 보이게 하고 애니메이션 시작
+      // 새 플립 시작: 리셋 → reflow → transition 복원 → flipping 추가
+      panel.style.transition = 'none';
       panel.classList.remove('history__book-flip-panel--hidden');
+      panel.classList.remove('flipping');
       panel.classList.add('history__book-flip-panel--animating');
+
+      panel.getBoundingClientRect();
+
+      panel.style.transition = '';
+
       requestAnimationFrame(() => {
         if (flipPanelRef.current) {
           flipPanelRef.current.classList.add('flipping');
@@ -84,12 +79,6 @@ export function BookPage({
       });
     }
   }, [isFlipping]);
-
-  function handleTransitionEnd(e: TransitionEvent) {
-    if (e.propertyName === 'transform') {
-      onTransitionEnd();
-    }
-  }
 
   const panelDirection = flipDirection ?? 'forward';
 
@@ -99,8 +88,6 @@ export function BookPage({
       <div
         className={`history__book-static-left history__book-page-left${canGoLeft ? ' history__book-page-left--clickable' : ''}`}
         onMouseDown={canGoLeft ? onLeftMouseDown : undefined}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
       >
         <BookPageOuterShadow side={PAGE_SIDE.LEFT} />
         <div className='history__book-page-content'>{staticLeftContent}</div>
@@ -111,8 +98,6 @@ export function BookPage({
       <div
         className={`history__book-static-right history__book-page-right${canGoRight ? ' history__book-page-right--clickable' : ''}`}
         onMouseDown={canGoRight ? onRightMouseDown : undefined}
-        onMouseUp={onMouseUp}
-        onMouseLeave={onMouseLeave}
       >
         <div className='history__book-page-inner-shadow' />
         <div className='history__book-page-content'>{staticRightContent}</div>
@@ -123,7 +108,6 @@ export function BookPage({
       <div
         ref={flipPanelRef}
         className={`history__book-flip-panel history__book-flip-panel--${panelDirection}`}
-        onTransitionEnd={handleTransitionEnd}
       >
         <div
           className={`history__book-flip-front ${panelDirection === 'forward' ? 'history__book-page-right' : 'history__book-page-left'}`}

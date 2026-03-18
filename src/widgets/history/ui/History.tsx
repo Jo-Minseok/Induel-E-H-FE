@@ -21,16 +21,12 @@ function History() {
     canGoRight,
     isFlipping,
     flipDirection,
-    onFlipComplete,
     nextPageIndex,
     nextActiveItem,
     prevPageIndex,
     prevActiveItem,
     goToItem,
-    stopHold,
     startHold,
-    leftClickRef,
-    rightClickRef,
   } = useBookNavigation(breakpoint);
 
   function handleListItemClick(index: number) {
@@ -118,11 +114,8 @@ function History() {
             flipDirection={flipDirection}
             canGoLeft={canGoLeft && !isFlipping}
             canGoRight={canGoRight && !isFlipping}
-            onTransitionEnd={onFlipComplete}
-            onLeftMouseDown={() => startHold(leftClickRef)}
-            onRightMouseDown={() => startHold(rightClickRef)}
-            onMouseUp={stopHold}
-            onMouseLeave={stopHold}
+            onLeftMouseDown={() => startHold('left')}
+            onRightMouseDown={() => startHold('right')}
           />
         </div>
         <div className='history__book-cover'>

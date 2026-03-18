@@ -260,10 +260,6 @@
   transform: rotateY(180deg);
 }
 
-.history__book-flip-panel--no-transition {
-  transition: none !important;
-}
-
 .history__book-flip-panel--hidden {
   opacity: 0;
   pointer-events: none;
