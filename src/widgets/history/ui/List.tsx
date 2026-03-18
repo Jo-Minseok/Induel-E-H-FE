@@ -19,7 +19,7 @@ export function ListPage({
   const offset = side === 'left' ? 0 : midpoint;
 
   return (
-    <div className='list__container'>
+    <nav className='list__container' aria-label='작품 목록'>
       <BookPageTitle title='List' hidden={side === 'right'} hrWidth='41.32%' />
       <ul className='list__ul'>
         {items.map((item, i) => (
@@ -34,6 +34,6 @@ export function ListPage({
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 }

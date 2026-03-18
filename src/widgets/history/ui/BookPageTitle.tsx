@@ -18,9 +18,9 @@ export function BookPageTitle({
         hrWidth ? ({ '--title-hr-width': hrWidth } as CSSProperties) : undefined
       }
     >
-      <hr />
+      <hr aria-hidden='true' />
       <h3>{title}</h3>
-      <hr />
+      <hr aria-hidden='true' />
     </div>
   );
 }

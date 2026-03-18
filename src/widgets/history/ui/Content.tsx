@@ -60,7 +60,7 @@ function ContentItem({
   const imageSrc = getContentImage(index);
 
   return (
-    <div className='content__item'>
+    <article className='content__item'>
       <div className='content__text'>
         <h3 className='content__title-eng'>{item.titleEng}</h3>
         <h3 className='content__title-kor'>{item.title}</h3>
@@ -68,23 +68,41 @@ function ContentItem({
           subTitle={item.subTitle as SubTitleProp}
           content={item.content as ContentProp}
         />
-        <div className='content__caption'>
+        <dl className='content__caption'>
           <div className='content__caption-col'>
-            {item.time && <span>사업 기간 {item.time}</span>}
+            {item.time && (
+              <div className='content__caption-row'>
+                <dt>사업 기간</dt>
+                <dd>{item.time}</dd>
+              </div>
+            )}
             {item.area.length > 0 && (
-              <span>사업 면적 {item.area.join(' | ')}</span>
+              <div className='content__caption-row'>
+                <dt>사업 면적</dt>
+                <dd>{item.area.join('\n')}</dd>
+              </div>
             )}
           </div>
           <div className='content__caption-col'>
-            {item.description && <span>{item.description}</span>}
-            {item.address && <span>{item.address}</span>}
+            {item.description && (
+              <div className='content__caption-row'>
+                <dt className='sr-only'>설명</dt>
+                <dd>{item.description}</dd>
+              </div>
+            )}
+            {item.address && (
+              <div className='content__caption-row'>
+                <dt className='sr-only'>주소</dt>
+                <dd>{item.address}</dd>
+              </div>
+            )}
           </div>
-        </div>
+        </dl>
       </div>
-      <div className='content__image'>
+      <figure className='content__image'>
         {imageSrc && <img src={imageSrc} alt={item.title} />}
-      </div>
-    </div>
+      </figure>
+    </article>
   );
 }
 
@@ -92,13 +110,9 @@ export function ContentPage({ side, pageIndex }: ContentPageProps) {
   const itemIndex = getDataIndex(pageIndex, side);
   const item = artworks[itemIndex] ?? null;
 
-  return (
-    <>
-      {item ? (
-        <ContentItem item={item} index={itemIndex} />
-      ) : (
-        <div className='content__empty' />
-      )}
-    </>
+  return item ? (
+    <ContentItem item={item} index={itemIndex} />
+  ) : (
+    <div className='content__empty' />
   );
 }

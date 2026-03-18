@@ -19,8 +19,7 @@ export function TimelinePage({ side }: { side: PageSide }) {
           const item = items[i];
           return item ? (
             <li key={item.name}>
-              <span>{item.date}:</span>
-              <span>{item.name}</span>
+              <time>{item.date}</time>:<span>{item.name}</span>
             </li>
           ) : (
             <li

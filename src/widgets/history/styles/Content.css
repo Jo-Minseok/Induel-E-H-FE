@@ -55,13 +55,30 @@
 }
 
 .content__caption-col:last-child {
-  text-align: right;
+  align-items: flex-end;
 }
 
-.content__caption span {
+.content__caption-row {
+  display: flex;
+  gap: 0.3em;
+}
+
+.content__caption dt {
   font-size: 0.68vmax;
   font-weight: 400;
   color: var(--typo-contentW);
+  white-space: nowrap;
+}
+
+.content__caption dd {
+  font-size: 0.68vmax;
+  font-weight: 400;
+  color: var(--typo-contentW);
+  white-space: pre-line;
+}
+
+.content__caption-col:last-child dd {
+  text-align: right;
 }
 
 .content__empty {
@@ -111,7 +128,12 @@
     font-size: 1.56vmin;
   }
 
-  .content__caption span {
+  .content__caption dt,
+  .content__caption dd {
     font-size: 1.04vmin;
+  }
+
+  .content__caption-col:last-child .content__caption-row {
+    justify-content: flex-end;
   }
 }

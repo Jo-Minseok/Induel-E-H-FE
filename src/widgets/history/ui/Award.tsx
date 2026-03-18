@@ -38,7 +38,7 @@ export function AwardPage({
       <div className='award__content'>
         {items.map((group) => (
           <div key={group.year} className='award__year-group'>
-            <span className='award__year'>{group.year}</span>
+            <h4 className='award__year'>{group.year}</h4>
             <ul className='award__ul'>
               {group.contents.map((text) => (
                 <li key={text}>{text}</li>
