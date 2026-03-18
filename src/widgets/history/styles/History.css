@@ -56,22 +56,22 @@
     padding: 2.605% 3.908%;
   }
   .history__title {
-    font-size: 5.86vmax;
+    font-size: 7.81vmin;
   }
 
   .history__category {
-    gap: 1.465vmax;
+    gap: 1.95vmin;
   }
 
   .history__last {
-    font-size: 1.563vmax;
+    font-size: 2.08vmin;
   }
 
   .history__category button {
-    font-size: 1.46vmax;
+    font-size: 1.95vmin;
   }
 
   .history__category span {
-    font-size: 1.46vmax;
+    font-size: 1.95vmin;
   }
 }

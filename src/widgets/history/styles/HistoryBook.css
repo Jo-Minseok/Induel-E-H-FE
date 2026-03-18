@@ -267,11 +267,11 @@
   }
 
   .history__book-cover-left {
-    border-radius: 1.46vmax 1.46vmax 0 0;
+    border-radius: 1.95vmin 1.95vmin 0 0;
   }
 
   .history__book-cover-right {
-    border-radius: 0 0 1.46vmax 1.46vmax;
+    border-radius: 0 0 1.95vmin 1.95vmin;
   }
 
   .history__book-cover-left::after,
@@ -326,7 +326,7 @@
 
   .history__book-page-content {
     width: 100%;
-    padding: 0.98vmax;
+    padding: 1.31vmin;
   }
 
   .history__book-page-outer-shadow {
