@@ -118,14 +118,40 @@ export function BookPage({
         <div
           className={`history__book-flip-front ${panelDirection === 'forward' ? 'history__book-page-right' : 'history__book-page-left'}`}
         >
-          <div className='history__book-page-inner-shadow' />
-          <div className='history__book-page-content'>{flipFrontContent}</div>
+          {panelDirection === 'forward' ? (
+            <>
+              <div className='history__book-page-inner-shadow' />
+              <div className='history__book-page-content'>
+                {flipFrontContent}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className='history__book-page-content'>
+                {flipFrontContent}
+              </div>
+              <div className='history__book-page-inner-shadow' />
+            </>
+          )}
         </div>
         <div
           className={`history__book-flip-back ${panelDirection === 'forward' ? 'history__book-page-left' : 'history__book-page-right'}`}
         >
-          <div className='history__book-page-content'>{flipBackContent}</div>
-          <div className='history__book-page-inner-shadow' />
+          {panelDirection === 'forward' ? (
+            <>
+              <div className='history__book-page-content'>
+                {flipBackContent}
+              </div>
+              <div className='history__book-page-inner-shadow' />
+            </>
+          ) : (
+            <>
+              <div className='history__book-page-inner-shadow' />
+              <div className='history__book-page-content'>
+                {flipBackContent}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
