@@ -129,6 +129,7 @@
   height: 100%;
   padding: 2.061%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .history__book-page-outer-shadow {
@@ -388,16 +389,16 @@
 
   .history__book-page-left--clickable {
     cursor:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><polyline points='18,5 8,14 18,23' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><polyline points='18,5 8,14 18,23' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
-        8 14,
-      w-resize;
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><polyline points='5,18 14,8 23,18' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><polyline points='5,18 14,8 23,18' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+        14 8,
+      n-resize;
   }
 
   .history__book-page-right--clickable {
     cursor:
-      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><polyline points='10,5 20,14 10,23' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><polyline points='10,5 20,14 10,23' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
-        20 14,
-      e-resize;
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><polyline points='5,10 14,20 23,10' stroke='white' stroke-width='4' fill='none' stroke-linecap='round' stroke-linejoin='round'/><polyline points='5,10 14,20 23,10' stroke='%23333' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+        14 20,
+      s-resize;
   }
 
   .history__book-page-flip {
@@ -406,17 +407,11 @@
   }
 
   .history__book-page-right .history__book-page-flip.page-flip-out {
-    animation: page-flip-out-right 0.25s cubic-bezier(0.4, 0, 1, 1) both;
     transform-origin: center top;
-    will-change: transform;
-    backface-visibility: hidden;
   }
 
   .history__book-page-left .history__book-page-flip.page-flip-out {
-    animation: page-flip-out-left 0.25s cubic-bezier(0.4, 0, 1, 1) both;
     transform-origin: center bottom;
-    will-change: transform;
-    backface-visibility: hidden;
   }
 
   @keyframes page-flip-out-right {
