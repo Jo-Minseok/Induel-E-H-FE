@@ -110,7 +110,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  perspective: 1200px;
+  perspective: 555vh;
 }
 
 .history__book-page-left,
@@ -392,7 +392,7 @@
     height: 97.5%;
     width: 96.67%;
     flex-direction: column;
-    perspective: 1200px;
+    perspective: 555vh;
   }
 
   .history__book-page-left,
