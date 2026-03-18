@@ -43,3 +43,17 @@
 .timeline__ul-placeholder::before {
   content: '•';
 }
+
+@media (max-width: 1024px) {
+  .timeline__container {
+    gap: 1.46vh;
+  }
+
+  .timeline__ul {
+    gap: 1.95vh;
+  }
+
+  .timeline__ul li {
+    font-size: 1.82vmin;
+  }
+}
