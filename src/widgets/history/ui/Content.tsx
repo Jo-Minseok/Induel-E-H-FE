@@ -2,41 +2,13 @@ import { useEffect } from 'react';
 
 import { artworks } from '@entities/history';
 
-import { getDataIndex } from '../model/helpers';
+import {
+  getArtworkIndex,
+  getContentImage,
+  preloadContentImages,
+} from '../model/helpers';
 import type { PageSide } from '../model/types';
 import '../styles/Content.css';
-
-const contentImages = import.meta.glob('../assets/content/*.webp', {
-  eager: true,
-  import: 'default',
-});
-
-function getContentImage(index: number): string | undefined {
-  const src = contentImages[`../assets/content/${index}.webp`];
-  return typeof src === 'string' ? src : undefined;
-}
-
-function preloadAdjacentPages(pageIndex: number) {
-  const adjacentIndices = [
-    getDataIndex(pageIndex + 1, 'left'),
-    getDataIndex(pageIndex + 1, 'right'),
-    getDataIndex(pageIndex + 2, 'left'),
-    getDataIndex(pageIndex + 2, 'right'),
-    getDataIndex(pageIndex - 1, 'left'),
-    getDataIndex(pageIndex - 1, 'right'),
-    getDataIndex(pageIndex - 2, 'left'),
-    getDataIndex(pageIndex - 2, 'right'),
-  ];
-
-  for (const idx of adjacentIndices) {
-    if (idx < 0 || idx >= artworks.length) continue;
-    const src = getContentImage(idx);
-    if (src) {
-      const img = new Image();
-      img.src = src;
-    }
-  }
-}
 
 interface ContentPageProps {
   side: PageSide;
@@ -131,11 +103,11 @@ function ContentItem({
 }
 
 export function ContentPage({ side, pageIndex }: ContentPageProps) {
-  const itemIndex = getDataIndex(pageIndex, side);
+  const itemIndex = getArtworkIndex(pageIndex, side);
   const item = artworks[itemIndex] ?? null;
 
   useEffect(() => {
-    preloadAdjacentPages(pageIndex);
+    preloadContentImages(pageIndex);
   }, [pageIndex]);
 
   return item ? (

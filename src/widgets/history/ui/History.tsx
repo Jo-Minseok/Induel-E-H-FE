@@ -27,16 +27,16 @@ function History() {
     nextActiveItem,
     prevPageIndex,
     prevActiveItem,
-    goToItem,
-    startHold,
+    navigateToCategory,
+    beginContinuousFlip,
   } = useBookNavigation(breakpoint);
 
   function handleListItemClick(index: number) {
-    goToItem('Content', Math.floor(index / 2), true);
+    navigateToCategory('Content', Math.floor(index / 2), true);
   }
 
   function handleCategoryClick(item: IndexItem) {
-    goToItem(item, 0, true);
+    navigateToCategory(item, 0, true);
   }
 
   function renderPage(
@@ -116,8 +116,8 @@ function History() {
             flipDirection={flipDirection}
             canGoLeft={canGoLeft && !isFlipping}
             canGoRight={canGoRight && !isFlipping}
-            onLeftMouseDown={() => startHold('left')}
-            onRightMouseDown={() => startHold('right')}
+            onLeftMouseDown={() => beginContinuousFlip('left')}
+            onRightMouseDown={() => beginContinuousFlip('right')}
           />
         </div>
         <div className='history__book-cover'>

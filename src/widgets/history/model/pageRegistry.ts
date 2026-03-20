@@ -22,7 +22,7 @@ export const AWARD_YEAR_RANGES_BY_BREAKPOINT: Record<
   ],
 };
 
-type PageConfig = {
+export type PageConfig = {
   totalPages: number;
 };
 
@@ -31,8 +31,8 @@ const cache = new Map<Breakpoint, Record<IndexItem, PageConfig>>();
 export function getPageRegistry(
   breakpoint: Breakpoint,
 ): Record<IndexItem, PageConfig> {
-  const hit = cache.get(breakpoint);
-  if (hit) return hit;
+  const cachedRegistry = cache.get(breakpoint);
+  if (cachedRegistry) return cachedRegistry;
 
   const ranges = AWARD_YEAR_RANGES_BY_BREAKPOINT[breakpoint];
   const registry: Record<IndexItem, PageConfig> = {

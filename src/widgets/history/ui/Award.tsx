@@ -1,7 +1,7 @@
 import { awardData } from '@entities/history';
 import type { Breakpoint } from '@shared/lib/breakpoint/useBreakpoint';
 
-import { getDataIndex } from '../model/helpers';
+import { getArtworkIndex } from '../model/helpers';
 import { AWARD_YEAR_RANGES_BY_BREAKPOINT } from '../model/pageRegistry';
 import type { PageSide } from '../model/types';
 import '../styles/Award.css';
@@ -28,7 +28,7 @@ export function AwardPage({
   breakpoint: Breakpoint;
 }) {
   const pages = pagesByBreakpoint[breakpoint];
-  const dataIndex = getDataIndex(pageIndex, side);
+  const dataIndex = getArtworkIndex(pageIndex, side);
   const items = pages[dataIndex] ?? [];
   const showTitle = dataIndex === 0;
 
