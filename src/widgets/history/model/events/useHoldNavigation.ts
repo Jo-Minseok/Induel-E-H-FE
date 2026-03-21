@@ -1,11 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export function useHoldNavigation() {
   const holdDirectionRef = useRef<'left' | 'right' | null>(null);
   const chainTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [isHoldChaining, setIsHoldChaining] = useState(false);
 
   const navigateLeftRef = useRef<() => void>(() => {});
   const navigateRightRef = useRef<() => void>(() => {});
+  const navigateLeftRapidRef = useRef<() => void>(() => {});
+  const navigateRightRapidRef = useRef<() => void>(() => {});
   const endContinuousFlipRef = useRef<() => void>(() => {});
 
   function beginContinuousFlip(direction: 'left' | 'right') {
@@ -20,6 +23,7 @@ export function useHoldNavigation() {
 
   function endContinuousFlip() {
     holdDirectionRef.current = null;
+    setIsHoldChaining(false);
     if (chainTimerRef.current) {
       clearTimeout(chainTimerRef.current);
       chainTimerRef.current = null;
@@ -29,9 +33,11 @@ export function useHoldNavigation() {
   function chainHoldFlip(): boolean {
     if (!holdDirectionRef.current) return false;
 
+    setIsHoldChaining(true);
     chainTimerRef.current = setTimeout(() => {
-      if (holdDirectionRef.current === 'left') navigateLeftRef.current();
-      else if (holdDirectionRef.current === 'right') navigateRightRef.current();
+      if (holdDirectionRef.current === 'left') navigateLeftRapidRef.current();
+      else if (holdDirectionRef.current === 'right')
+        navigateRightRapidRef.current();
     }, 0);
 
     return true;
@@ -41,9 +47,13 @@ export function useHoldNavigation() {
     navigateLeft: () => void,
     navigateRight: () => void,
     endFlip: () => void,
+    navigateLeftRapid?: () => void,
+    navigateRightRapid?: () => void,
   ) {
     navigateLeftRef.current = navigateLeft;
     navigateRightRef.current = navigateRight;
+    navigateLeftRapidRef.current = navigateLeftRapid ?? navigateLeft;
+    navigateRightRapidRef.current = navigateRightRapid ?? navigateRight;
     endContinuousFlipRef.current = endFlip;
   }
 
@@ -90,6 +100,7 @@ export function useHoldNavigation() {
   }, []);
 
   return {
+    isHoldChaining,
     clearHoldDirection,
     beginContinuousFlip,
     endContinuousFlip,

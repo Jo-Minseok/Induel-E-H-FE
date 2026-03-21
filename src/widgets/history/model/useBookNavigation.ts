@@ -5,7 +5,7 @@ import type { Breakpoint } from '@shared/lib/breakpoint/useBreakpoint';
 import { buildRapidSteps } from './animation/buildRapidSteps';
 import { useFlipAnimation } from './animation/useFlipAnimation';
 import { useRapidFlip } from './animation/useRapidFlip';
-import { INDEX_LIST } from './constants';
+import { INDEX_LIST, RAPID_FLIP_DURATION } from './constants';
 import { useHoldNavigation } from './events/useHoldNavigation';
 import { getPageRegistry } from './pageRegistry';
 import type { FlipDirection, IndexItem, NavigationStep } from './types';
@@ -71,6 +71,7 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     cleanup: rapidCleanup,
   } = useRapidFlip(startFlipAnimation);
   const {
+    isHoldChaining,
     clearHoldDirection,
     beginContinuousFlip,
     endContinuousFlip,
@@ -92,45 +93,53 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     chainHoldFlip();
   });
 
-  function navigateLeft() {
+  function navigateLeft(duration?: number) {
     if (!canGoLeft) {
       clearHoldDirection();
       return;
     }
-    startFlipAnimation('backward', () => {
-      if (currentPageIndex > 0) {
-        setPageIndices((prev) => ({
-          ...prev,
-          [activeItem]: prev[activeItem] - 1,
-        }));
-      } else if (activeIndex > 0) {
-        const prev = INDEX_LIST[activeIndex - 1];
-        const prevTotalPages = pageRegistry[prev].totalPages;
-        setPageIndices((p) => ({ ...p, [prev]: prevTotalPages - 1 }));
-        setActiveItem(prev);
-        updateTabActiveItem(prev);
-      }
-    });
+    startFlipAnimation(
+      'backward',
+      () => {
+        if (currentPageIndex > 0) {
+          setPageIndices((prev) => ({
+            ...prev,
+            [activeItem]: prev[activeItem] - 1,
+          }));
+        } else if (activeIndex > 0) {
+          const prev = INDEX_LIST[activeIndex - 1];
+          const prevTotalPages = pageRegistry[prev].totalPages;
+          setPageIndices((p) => ({ ...p, [prev]: prevTotalPages - 1 }));
+          setActiveItem(prev);
+          updateTabActiveItem(prev);
+        }
+      },
+      duration,
+    );
   }
 
-  function navigateRight() {
+  function navigateRight(duration?: number) {
     if (!canGoRight) {
       clearHoldDirection();
       return;
     }
-    startFlipAnimation('forward', () => {
-      if (currentPageIndex < totalPages - 1) {
-        setPageIndices((prev) => ({
-          ...prev,
-          [activeItem]: prev[activeItem] + 1,
-        }));
-      } else if (activeIndex < INDEX_LIST.length - 1) {
-        const next = INDEX_LIST[activeIndex + 1];
-        setPageIndices((p) => ({ ...p, [next]: 0 }));
-        setActiveItem(next);
-        updateTabActiveItem(next);
-      }
-    });
+    startFlipAnimation(
+      'forward',
+      () => {
+        if (currentPageIndex < totalPages - 1) {
+          setPageIndices((prev) => ({
+            ...prev,
+            [activeItem]: prev[activeItem] + 1,
+          }));
+        } else if (activeIndex < INDEX_LIST.length - 1) {
+          const next = INDEX_LIST[activeIndex + 1];
+          setPageIndices((p) => ({ ...p, [next]: 0 }));
+          setActiveItem(next);
+          updateTabActiveItem(next);
+        }
+      },
+      duration,
+    );
   }
 
   function navigateToCategory(
@@ -174,7 +183,13 @@ export function useBookNavigation(breakpoint: Breakpoint) {
 
   // 매 렌더 후 최신 함수 반영
   useEffect(() => {
-    syncCallbacks(navigateLeft, navigateRight, endContinuousFlip);
+    syncCallbacks(
+      navigateLeft,
+      navigateRight,
+      endContinuousFlip,
+      () => navigateLeft(RAPID_FLIP_DURATION),
+      () => navigateRight(RAPID_FLIP_DURATION),
+    );
   });
 
   // 클린업
@@ -195,6 +210,7 @@ export function useBookNavigation(breakpoint: Breakpoint) {
     isFlipping,
     flipDirection,
     isRapidFlipping,
+    isHoldChaining,
     nextPageIndex,
     nextActiveItem,
     prevPageIndex,

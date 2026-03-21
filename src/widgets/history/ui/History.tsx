@@ -23,6 +23,7 @@ function History() {
     isFlipping,
     flipDirection,
     isRapidFlipping,
+    isHoldChaining,
     nextPageIndex,
     nextActiveItem,
     prevPageIndex,
@@ -105,7 +106,7 @@ function History() {
       </div>
       <div className='history__book'>
         <div
-          className={`history__book-page${isRapidFlipping ? ' history__book-page--rapid' : ''}`}
+          className={`history__book-page${isRapidFlipping ? ' history__book-page--rapid' : ''}${isHoldChaining ? ' history__book-page--hold' : ''}`}
         >
           <BookPage
             staticLeftContent={staticLeftContent}
