@@ -28,17 +28,33 @@ export function ImageGalleryPopup({
     document.body.style.overflow = 'hidden';
 
     function handleKeyDown(e: KeyboardEvent) {
+      e.stopImmediatePropagation();
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') goToPrevSlide();
-      if (e.key === 'ArrowRight') goToNextSlide();
+      if (e.repeat) return;
+      if (e.key === 'ArrowLeft') startContinuousSlide(goToPrevSlide);
+      if (e.key === 'ArrowRight') startContinuousSlide(goToNextSlide);
     }
 
-    window.addEventListener('keydown', handleKeyDown);
+    function handleKeyUp(e: KeyboardEvent) {
+      e.stopImmediatePropagation();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight')
+        stopContinuousSlide();
+    }
+
+    window.addEventListener('keydown', handleKeyDown, { capture: true });
+    window.addEventListener('keyup', handleKeyUp, { capture: true });
     return () => {
       document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keydown', handleKeyDown, { capture: true });
+      window.removeEventListener('keyup', handleKeyUp, { capture: true });
     };
-  }, [onClose, goToPrevSlide, goToNextSlide]);
+  }, [
+    onClose,
+    goToPrevSlide,
+    goToNextSlide,
+    startContinuousSlide,
+    stopContinuousSlide,
+  ]);
 
   return (
     <div
