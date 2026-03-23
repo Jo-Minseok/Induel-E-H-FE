@@ -1,0 +1,24 @@
+.award__year_category {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.award__year_category button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.2vmax 1.25vw;
+  font-size: 1.25vw;
+  font-weight: 300;
+  color: var(--brown-200);
+  border-bottom: 3px solid var(--brown-200);
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+}
+
+.award__year_category button.active {
+  color: var(--brown-500);
+  border-bottom-color: var(--brown-500);
+  font-weight: 400;
+}

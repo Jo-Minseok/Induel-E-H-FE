@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import '../styles/YearCategory.css';
+
 const INDEX_LIST = ['전체', 2024, 2023, 2022, 2021, 2020];
 
 export function YearCategory() {
