@@ -1,6 +1,7 @@
 // import { Footer } from '@widgets/footer';
 import Hero from '@widgets/hero';
-import History from '@widgets/history';
+
+// import History from '@widgets/history';
 
 // import Map from '@widgets/map';
 
