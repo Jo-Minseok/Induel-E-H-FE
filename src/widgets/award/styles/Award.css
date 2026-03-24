@@ -21,8 +21,7 @@
   width: 88.54vmax;
   flex-shrink: 0;
   overflow-x: clip;
-  padding-inline: 0.56%;
-  box-sizing: content-box;
+  padding: 0.56%;
 }
 
 .award__card_slider {
