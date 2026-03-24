@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import sitemap from 'vite-plugin-sitemap';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vite.dev/config/
@@ -11,6 +12,7 @@ export const baseConfig = {
       },
     }),
     tsconfigPaths(),
+    sitemap({ hostname: 'https://induel.co.kr' }),
   ],
   server: {
     host: true,
