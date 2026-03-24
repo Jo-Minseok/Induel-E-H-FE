@@ -78,6 +78,15 @@
   letter-spacing: -0.025em;
 }
 
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--brown-400);
+  outline-offset: 2px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
