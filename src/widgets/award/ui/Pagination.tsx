@@ -15,8 +15,9 @@ export function Pagination({
     <div className='award__pagination'>
       <button
         className='award__pagination_arrow'
-        disabled={currentPage === 0}
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() =>
+          onPageChange(currentPage === 0 ? totalPages - 1 : currentPage - 1)
+        }
       >
         <IoIosArrowBack size={15} />
       </button>
@@ -37,8 +38,9 @@ export function Pagination({
 
       <button
         className='award__pagination_arrow'
-        disabled={currentPage === totalPages - 1}
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() =>
+          onPageChange(currentPage === totalPages - 1 ? 0 : currentPage + 1)
+        }
       >
         <IoIosArrowForward size={15} />
       </button>
