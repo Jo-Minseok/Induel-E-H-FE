@@ -24,7 +24,9 @@ function Award() {
       <div className='award__card_viewport'>
         <div
           className='award__card_slider'
-          style={{ transform: `translateX(-${page * 100}%)` }}
+          style={{
+            transform: `translateX(calc(-${page * 100}% - ${page}vmax))`,
+          }}
         >
           {Array.from({ length: totalPages }, (_, pageIndex) => (
             <div key={pageIndex} className='award__card_page'>

@@ -20,11 +20,14 @@
 .award__card_viewport {
   width: 88.54vmax;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow-x: clip;
+  padding-inline: 0.5vmax;
+  box-sizing: content-box;
 }
 
 .award__card_slider {
   display: flex;
+  gap: 1vmax;
   transition: transform 0.4s ease;
 }
 
