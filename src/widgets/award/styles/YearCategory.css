@@ -8,6 +8,7 @@
   border: none;
   cursor: pointer;
   padding: 0 1.25vw;
+  font-family: inherit;
   font-size: 1.25vw;
   font-weight: 400;
   color: var(--brown-200);
