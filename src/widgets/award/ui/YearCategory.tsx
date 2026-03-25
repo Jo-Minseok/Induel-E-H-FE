@@ -15,6 +15,7 @@ export function YearCategory({
     <div className='award__year_category'>
       {yearList.map((year) => (
         <button
+          type='button'
           role='tab'
           key={year}
           className={activeYear === year ? 'active' : ''}
