@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import awards from '../../../entities/award/model/award.json';
+import { award as awards } from '../../../entities/award';
 import { YEAR_LIST } from '../model/constant';
 import { getAwardImage } from '../model/helper';
 import '../styles/Award.css';
@@ -14,11 +14,17 @@ const BASE_ITEMS = 5;
 function useGridLayout() {
   const [columns, setColumns] = useState(BASE_ITEMS);
   const [rows, setRows] = useState(1);
+  const observerRef = useRef<ResizeObserver | null>(null);
 
   const ref = useCallback((node: HTMLDivElement | null) => {
+    if (observerRef.current) {
+      observerRef.current.disconnect();
+      observerRef.current = null;
+    }
+
     if (!node) return;
 
-    const observer = new ResizeObserver(() => {
+    observerRef.current = new ResizeObserver(() => {
       const style = getComputedStyle(node);
       const cols = style.gridTemplateColumns.split(' ').length;
       const definedRows =
@@ -27,7 +33,11 @@ function useGridLayout() {
       setRows(definedRows);
     });
 
-    observer.observe(node);
+    observerRef.current.observe(node);
+  }, []);
+
+  useEffect(() => {
+    return () => observerRef.current?.disconnect();
   }, []);
 
   return { ref, columns, rows };
@@ -48,6 +58,10 @@ function Award() {
 
   const itemsPerPage = columns * rows;
   const totalPages = Math.ceil(filteredAwards.length / itemsPerPage);
+
+  useEffect(() => {
+    setPage((prev) => Math.min(prev, Math.max(0, totalPages - 1)));
+  }, [totalPages]);
 
   function handleYearChange(year: string | number) {
     setActiveYear(year);
