@@ -4,5 +4,10 @@ const awardImages = import.meta.glob<string>('../assets/*.png', {
 });
 
 export function getAwardImage(id: number): string {
-  return awardImages[`../assets/${id}.png`];
+  const key = `../assets/${id}.png`;
+  const image = awardImages[key];
+  if (!image) {
+    throw new Error(`Award image not found for id: ${id}`);
+  }
+  return image;
 }
