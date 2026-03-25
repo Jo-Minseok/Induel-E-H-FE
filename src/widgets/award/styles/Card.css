@@ -60,3 +60,18 @@
   font-size: 0.94vmax;
   color: var(--brown-800);
 }
+
+@media (max-width: 1024px) {
+  .award__card {
+    border-radius: 1.31vmin;
+    box-shadow: 0 0.521vmin 0.521vmin rgba(0, 0, 0, 0.25);
+  }
+
+  .award__card_title h4 {
+    font-size: 2.87vmin;
+  }
+
+  .award__card_title p {
+    font-size: 2.35vmin;
+  }
+}

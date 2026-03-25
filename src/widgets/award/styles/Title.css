@@ -17,3 +17,17 @@
   font-weight: 800;
   font-size: 0.938vmax;
 }
+
+@media (max-width: 1024px) {
+  .award__title {
+    gap: 1.31vmin;
+  }
+
+  .award__title h2 {
+    font-size: 4.69vmin;
+  }
+
+  .award__title h3 {
+    font-size: 2vmin;
+  }
+}

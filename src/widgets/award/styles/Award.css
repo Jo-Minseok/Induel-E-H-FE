@@ -29,10 +29,47 @@
 }
 
 .award__card_page {
+  --grid-rows: 1;
   display: grid;
   min-width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(276px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(14.375vmax, 1fr));
   grid-auto-rows: 20vmax;
   column-gap: 4.41%;
   row-gap: 3.906vmax;
+}
+
+@media (max-width: 1024px) {
+  .award {
+    height: 100dvh;
+    padding: 3.91vmin;
+    gap: 3.91vmin;
+  }
+
+  .award__content {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+    gap: 3.91vmin;
+  }
+
+  .award__card_viewport {
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .award__card_slider {
+    width: 100%;
+    height: 100%;
+  }
+
+  .award__card_page {
+    --grid-rows: 2;
+    height: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-rows: unset;
+    column-gap: 2.604vmin;
+    row-gap: 2.604vmin;
+  }
 }

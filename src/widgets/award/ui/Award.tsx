@@ -11,8 +11,9 @@ import { YearCategory } from './YearCategory';
 
 const BASE_ITEMS = 5;
 
-function useGridColumns() {
+function useGridLayout() {
   const [columns, setColumns] = useState(BASE_ITEMS);
+  const [rows, setRows] = useState(1);
 
   const ref = useCallback((node: HTMLDivElement | null) => {
     if (!node) return;
@@ -20,19 +21,22 @@ function useGridColumns() {
     const observer = new ResizeObserver(() => {
       const style = getComputedStyle(node);
       const cols = style.gridTemplateColumns.split(' ').length;
+      const definedRows =
+        parseInt(style.getPropertyValue('--grid-rows'), 10) || 1;
       setColumns(cols);
+      setRows(definedRows);
     });
 
     observer.observe(node);
   }, []);
 
-  return { ref, columns };
+  return { ref, columns, rows };
 }
 
 function Award() {
   const [page, setPage] = useState(0);
   const [activeYear, setActiveYear] = useState<string | number>('전체');
-  const { ref: gridRef, columns } = useGridColumns();
+  const { ref: gridRef, columns, rows } = useGridLayout();
 
   const filteredAwards = useMemo(
     () =>
@@ -42,7 +46,6 @@ function Award() {
     [activeYear],
   );
 
-  const rows = Math.ceil(BASE_ITEMS / columns);
   const itemsPerPage = columns * rows;
   const totalPages = Math.ceil(filteredAwards.length / itemsPerPage);
 
