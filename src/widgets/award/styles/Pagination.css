@@ -1,12 +1,13 @@
 .award__pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.53vmax;
 }
 
 .award__pagination_arrow {
-  width: 1.57vmax;
-  height: 1.57vmax;
+  width: 1.46vmax;
+  aspect-ratio: 1 / 1;
   background: none;
   border: 1px solid var(--brown-400);
   border-radius: 0.27vmax;
@@ -42,5 +43,5 @@
 
 .award__pagination_info {
   font-size: 0.94vmax;
-  color: var(--black);
+  color: var(--brown-500);
 }

@@ -1,7 +1,7 @@
 .award {
   width: 100%;
   height: 84.89dvh;
-  background-color: var(--white);
+  background-color: var(--surface-light);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -10,18 +10,16 @@
   justify-content: space-between;
 }
 
-.award__top {
+.award__content {
   display: flex;
   flex-direction: column;
-  gap: 1.05vmax;
-  width: 100%;
+  gap: 2.604vmax;
 }
 
 .award__card_viewport {
   width: 88.54vmax;
-  flex-shrink: 0;
   overflow-x: clip;
-  padding: 0.56%;
+  padding: 0 0.56%;
 }
 
 .award__card_slider {
