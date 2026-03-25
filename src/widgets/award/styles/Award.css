@@ -1,6 +1,6 @@
 .award {
   width: 100%;
-  min-height: 84.89dvh;
+  min-height: 84.89svh;
   background-color: var(--surface-light);
   overflow: hidden;
   display: flex;
@@ -40,7 +40,7 @@
 
 @media (max-width: 1024px) {
   .award {
-    height: 100dvh;
+    height: 100svh;
     padding: 3.91vmin;
     gap: 3.91vmin;
   }
@@ -71,5 +71,27 @@
     grid-auto-rows: unset;
     column-gap: 2.604vmin;
     row-gap: 2.604vmin;
+  }
+}
+
+@media (max-width: 767px) {
+  .award {
+    padding: 4vmin;
+    gap: 8vmin;
+  }
+
+  .award__content {
+    gap: 5.34vmin;
+  }
+
+  .award__card_slider {
+    width: 100%;
+    height: 100%;
+  }
+
+  .award__card_page {
+    --grid-rows: 2;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
   }
 }

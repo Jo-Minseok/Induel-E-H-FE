@@ -54,6 +54,7 @@
   .award__pagination_arrow {
     width: 3.65vmin;
     font-size: 1.96vmin;
+    border-radius: 0.652vmin;
   }
 
   .award__pagination_dots {
@@ -66,10 +67,39 @@
   }
 
   .award__pagination_dot--active {
-    width: 4vmax;
+    width: 4.69vmin;
   }
 
   .award__pagination_info {
     font-size: 2.35vmin;
+  }
+}
+
+@media (max-width: 767px) {
+  .award__pagination {
+    gap: 2.67vmin;
+  }
+
+  .award__pagination_arrow {
+    width: 7.467vmin;
+    font-size: 4vmin;
+    border-radius: 1.34vmin;
+  }
+
+  .award__pagination_dots {
+    gap: 2.67vmin;
+  }
+
+  .award__pagination_dot {
+    width: 4.28vmin;
+    height: 4.28vmin;
+  }
+
+  .award__pagination_dot--active {
+    width: 9.6vmin;
+  }
+
+  .award__pagination_info {
+    font-size: 4.8vmin;
   }
 }

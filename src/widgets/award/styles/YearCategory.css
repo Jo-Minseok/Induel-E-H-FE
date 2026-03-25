@@ -34,3 +34,11 @@
     border-bottom: 0.3vmin solid var(--brown-200);
   }
 }
+
+@media (max-width: 767px) {
+  .award__year_category button {
+    padding: 0 2.34vw;
+    font-size: 3.734vmin;
+    border-bottom: 0.7vmin solid var(--brown-200);
+  }
+}
