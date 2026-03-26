@@ -1,19 +1,32 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { award as awards } from '../../../entities/award';
 import { YEAR_LIST } from '../model/constant';
 import { getAwardImage } from '../model/helper';
-import { useGridLayout } from '../model/useGridLayout';
 import '../styles/Award.css';
 import { Card } from './Card';
 import { Pagination } from './Pagination';
 import { AwardTitle } from './Title';
 import { YearCategory } from './YearCategory';
 
+function getItemsPerPage() {
+  if (window.innerWidth <= 767) return 4; // 2×2
+  if (window.innerWidth <= 1024) return 6; // 3×2
+  return 5; // 5×1
+}
+
 function Award() {
   const [currentPage, setCurrentPage] = useState(0);
   const [activeYear, setActiveYear] = useState<string | number>('전체');
-  const { gridRef, columns, rows } = useGridLayout();
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage);
+
+  useEffect(() => {
+    function handleResize() {
+      setItemsPerPage(getItemsPerPage());
+    }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const filteredAwards = useMemo(
     () =>
@@ -23,7 +36,6 @@ function Award() {
     [activeYear],
   );
 
-  const itemsPerPage = columns * rows;
   const totalPages = Math.ceil(filteredAwards.length / itemsPerPage);
   const safePage = Math.min(currentPage, Math.max(0, totalPages - 1));
 
@@ -54,11 +66,7 @@ function Award() {
             }}
           >
             {Array.from({ length: totalPages }, (_, pageIndex) => (
-              <div
-                key={pageIndex}
-                ref={pageIndex === 0 ? gridRef : undefined}
-                className='award__card_page'
-              >
+              <div key={pageIndex} className='award__card_page'>
                 {getPageItems(pageIndex).map((award) => (
                   <Card
                     key={award.id}

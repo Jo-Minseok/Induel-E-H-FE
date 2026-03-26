@@ -1,5 +1,5 @@
 .award__card {
-  height: min(40.85vmin, 38vh);
+  height: 100%;
   border-radius: 0.521vmax;
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
 
 .award__card_image {
   position: relative;
-  flex: 1;
+  flex: 1 1 0;
   min-height: 0;
 }
 
@@ -41,12 +41,14 @@
 }
 
 .award__card_title {
-  height: 31.25%;
+  flex: 0 0 31.25%;
+  min-height: 0;
   padding: 8.93%;
   background-color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .award__card_title h4 {
