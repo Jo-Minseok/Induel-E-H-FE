@@ -31,7 +31,6 @@
   width: 100%;
   gap: 1vmax;
   transition: transform 0.4s ease;
-  align-items: center;
 }
 
 .award__card_page {
@@ -77,7 +76,6 @@
   }
 
   .award__card_viewport {
-    overflow: clip;
     padding: 1vmin;
   }
 
