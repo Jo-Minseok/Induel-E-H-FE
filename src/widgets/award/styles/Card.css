@@ -41,9 +41,9 @@
 }
 
 .award__card_title {
-  flex: 0 0 31.25%;
   min-height: 0;
   padding: 8.93%;
+  gap: 1.1vmax;
   background-color: var(--white);
   display: flex;
   flex-direction: column;
@@ -69,6 +69,11 @@
     box-shadow: 0 0.521vmin 0.521vmin rgba(0, 0, 0, 0.25);
   }
 
+  .award__card_title {
+    padding: 3.3vmin;
+    gap: 2.7vmin;
+  }
+
   .award__card_title h4 {
     font-size: 2.87vmin;
   }
@@ -82,6 +87,11 @@
   .award__card {
     border-radius: 2.667vmin;
     box-shadow: 0 1.07vmin 1.07vmin rgba(0, 0, 0, 0.25);
+  }
+
+  .award__card_title {
+    padding: 6.7vmin;
+    gap: 5.4vmin;
   }
 
   .award__card_title h4 {

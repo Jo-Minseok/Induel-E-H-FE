@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.53vmax;
+  flex-shrink: 0;
 }
 
 .award__pagination_arrow {

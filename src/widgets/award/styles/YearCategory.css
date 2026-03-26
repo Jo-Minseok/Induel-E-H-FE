@@ -1,6 +1,7 @@
 .award__year_category {
   display: flex;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .award__year_category button {
