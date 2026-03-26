@@ -12,18 +12,40 @@ export function useGridLayout() {
       observerRef.current.disconnect();
       observerRef.current = null;
     }
-
     if (!node) return;
 
-    observerRef.current = new ResizeObserver(() => {
-      const style = getComputedStyle(node);
-      const columnCount = style.gridTemplateColumns.split(' ').length;
-      const rowCount = parseInt(style.getPropertyValue('--grid-rows'), 10) || 1;
-      setColumns(columnCount);
-      setRows(rowCount);
-    });
+    const el = node;
 
-    observerRef.current.observe(node);
+    function measure() {
+      const style = getComputedStyle(el);
+      const columnCount = style.gridTemplateColumns.split(' ').length;
+
+      const viewport = el.parentElement?.parentElement;
+      const firstCard = el.firstElementChild as HTMLElement | null;
+
+      setColumns(columnCount);
+
+      if (!viewport || !firstCard) return;
+
+      const availableHeight = viewport.clientHeight;
+      const cardHeight = firstCard.getBoundingClientRect().height;
+      const rowGap = parseFloat(style.rowGap) || 0;
+
+      if (cardHeight > 0 && availableHeight > 0) {
+        setRows(
+          Math.max(
+            1,
+            Math.floor((availableHeight + rowGap) / (cardHeight + rowGap)),
+          ),
+        );
+      }
+    }
+
+    observerRef.current = new ResizeObserver(measure);
+    observerRef.current.observe(el);
+
+    const viewport = el.parentElement?.parentElement;
+    if (viewport) observerRef.current.observe(viewport);
   }, []);
 
   return { gridRef, columns, rows };

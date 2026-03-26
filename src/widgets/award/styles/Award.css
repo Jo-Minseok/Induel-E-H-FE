@@ -1,40 +1,47 @@
 .award {
   width: 100%;
-  min-height: 84.89svh;
+  height: 84.89vh;
   background-color: var(--surface-light);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2.605vmax;
-  justify-content: space-between;
+  gap: 4.47vh;
 }
 
 .award__content {
   display: flex;
   flex-direction: column;
-  gap: 2.604vmax;
+  gap: 5.32vh;
+  flex: 1;
+  min-height: 0;
 }
 
 .award__card_viewport {
-  width: 88.54vmax;
-  overflow-x: clip;
+  width: 88.54vw;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
   padding: 0.56%;
 }
 
 .award__card_slider {
   display: flex;
+  height: 100%;
   gap: 1vmax;
   transition: transform 0.4s ease;
+  align-items: start;
 }
 
 .award__card_page {
   display: grid;
   min-width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(14.375vmax, 1fr));
-  grid-auto-rows: 20vmax;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: auto;
   column-gap: 4.41%;
-  row-gap: 3.906vmax;
+  row-gap: 2vmax;
+  align-content: start;
 }
 
 @media (max-width: 1024px) {
@@ -46,28 +53,15 @@
 
   .award__content {
     width: 100%;
-    flex: 1;
-    min-height: 0;
     gap: 3.91vmin;
   }
 
   .award__card_viewport {
     width: 100%;
-    flex: 1;
-    min-height: 0;
-  }
-
-  .award__card_slider {
-    width: 100%;
-    height: 100%;
   }
 
   .award__card_page {
-    --grid-rows: 2;
-    height: 100%;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-auto-rows: unset;
     column-gap: 2.604vmin;
     row-gap: 2.604vmin;
   }
@@ -83,13 +77,9 @@
     gap: 5.34vmin;
   }
 
-  .award__card_slider {
-    width: 100%;
-    height: 100%;
-  }
-
   .award__card_page {
-    --grid-rows: 2;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 4vmin;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }

@@ -1,4 +1,5 @@
 .award__card {
+  height: min(40.85vmin, 38vh);
   border-radius: 0.521vmax;
   display: flex;
   flex-direction: column;
@@ -40,7 +41,7 @@
 }
 
 .award__card_title {
-  flex-shrink: 0;
+  height: 31.25%;
   padding: 8.93%;
   background-color: var(--white);
   display: flex;
