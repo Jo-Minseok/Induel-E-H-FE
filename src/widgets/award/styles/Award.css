@@ -35,6 +35,7 @@
 
 .award__card_page {
   display: grid;
+  flex: 0 0 100%;
   height: 100%;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
@@ -49,6 +50,7 @@
   }
 
   .award__content {
+    width: 100%;
     gap: 3.91vmin;
   }
 
