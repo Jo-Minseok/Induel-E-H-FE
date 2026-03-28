@@ -1,6 +1,6 @@
 import type { AwardItem } from '@entities/award';
 
-import { getAwardImage } from '../model/helper';
+import { getAwardImage } from '../model/image';
 import '../styles/Card.css';
 
 export function Card({ award }: { award: AwardItem }) {

@@ -1,6 +1,6 @@
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-import { wrapPage } from '../model/helper';
+import { wrapPage } from '../model/pagination';
 import '../styles/Pagination.css';
 
 export function Pagination({

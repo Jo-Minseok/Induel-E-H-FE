@@ -2,26 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { AWARD_LIST } from '../../../entities/award';
 import { YEAR_LIST } from '../model/constant';
+import { getIsMobile, getItemsPerPage } from '../model/responsive';
 import '../styles/Award.css';
 import { Card } from './Card';
 import { Pagination } from './Pagination';
 import { AwardTitle } from './Title';
 import { YearCategory } from './YearCategory';
-
-const BREAKPOINTS = {
-  mobile: 767,
-  tablet: 1024,
-} as const;
-
-function getItemsPerPage() {
-  if (window.innerWidth <= BREAKPOINTS.mobile) return 4; // 2×2
-  if (window.innerWidth <= BREAKPOINTS.tablet) return 6; // 3×2
-  return 8; // 4x2
-}
-
-function getIsMobile() {
-  return window.innerWidth <= BREAKPOINTS.tablet;
-}
 
 function Award() {
   const [currentPage, setCurrentPage] = useState(0);

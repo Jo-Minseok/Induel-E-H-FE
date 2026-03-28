@@ -5,5 +5,3 @@ const years = [
 ].sort((a, b) => b - a);
 
 export const YEAR_LIST: (string | number)[] = ['전체', ...years];
-
-export const DEFAULT_COLUMNS = 5;
