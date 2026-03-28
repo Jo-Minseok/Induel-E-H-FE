@@ -53,8 +53,8 @@
   }
 
   .award__pagination_arrow {
-    width: 3.65vmin;
-    font-size: 1.96vmin;
+    width: 2.865vmin;
+    font-size: 1.954vmin;
     border-radius: 0.652vmin;
   }
 
@@ -63,8 +63,8 @@
   }
 
   .award__pagination_dot {
-    width: 2.09vmin;
-    height: 2.09vmin;
+    width: 2.605vmin;
+    height: 2.605vmin;
   }
 
   .award__pagination_dot--active {
@@ -72,7 +72,7 @@
   }
 
   .award__pagination_info {
-    font-size: 2.35vmin;
+    font-size: 2.084vmin;
   }
 }
 
@@ -82,18 +82,18 @@
   }
 
   .award__pagination_arrow {
-    width: 7.467vmin;
-    font-size: 4vmin;
+    width: 5.334vmin;
+    font-size: 2.67vmin;
     border-radius: 1.34vmin;
   }
 
   .award__pagination_dots {
-    gap: 2.67vmin;
+    gap: 2.666vmin;
   }
 
   .award__pagination_dot {
-    width: 4.28vmin;
-    height: 4.28vmin;
+    width: 4.8vmin;
+    height: 4.8vmin;
   }
 
   .award__pagination_dot--active {
@@ -101,6 +101,6 @@
   }
 
   .award__pagination_info {
-    font-size: 4.8vmin;
+    font-size: 3.734vmin;
   }
 }
