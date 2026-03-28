@@ -7,8 +7,8 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0 1.25vw;
-  font-size: 1.25vmax;
+  padding: 0 0.8vw;
+  font-size: 0.834vmax;
   font-weight: 400;
   color: var(--brown-200);
   border-bottom: 0.12vmax solid var(--brown-200);
